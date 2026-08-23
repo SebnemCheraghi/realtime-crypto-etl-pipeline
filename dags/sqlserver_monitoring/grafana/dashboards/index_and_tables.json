@@ -1,0 +1,36 @@
+{
+    "annotations": { "list": [] },
+    "editable": true,
+    "graphTooltip": 1,
+    "title": "SQL Server - Index & Table Health",
+    "uid": "sqlserver_index_tables",
+    "version": 1,
+    "panels": [
+      {
+        "title": "High Fragmented Indexes (>30%)",
+        "type": "table",
+        "gridPos": { "h": 10, "w": 12, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "ClickHouse-SQLServer-Monitoring" },
+            "queryType": "sql",
+            "rawSql": "SELECT database_name, table_name, index_name, avg_fragmentation_pct, page_count FROM sqlserver_monitoring.metrics_index_fragmentation WHERE created_at = (SELECT max(created_at) FROM sqlserver_monitoring.metrics_index_fragmentation) AND avg_fragmentation_pct > 30 ORDER BY avg_fragmentation_pct DESC",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "title": "Missing Index Recommendations",
+        "type": "table",
+        "gridPos": { "h": 10, "w": 12, "x": 12, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "ClickHouse-SQLServer-Monitoring" },
+            "queryType": "sql",
+            "rawSql": "SELECT database_name, table_name, equality_columns, inequality_columns, included_columns, avg_user_impact FROM sqlserver_monitoring.metrics_missing_indexes WHERE created_at = (SELECT max(created_at) FROM sqlserver_monitoring.metrics_missing_indexes) ORDER BY avg_user_impact DESC LIMIT 20",
+            "refId": "A"
+          }
+        ]
+      }
+    ]
+  }

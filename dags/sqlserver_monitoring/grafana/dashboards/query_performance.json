@@ -1,0 +1,36 @@
+{
+    "annotations": { "list": [] },
+    "editable": true,
+    "graphTooltip": 1,
+    "title": "SQL Server - Query Performance & Waits",
+    "uid": "sqlserver_query_perf",
+    "version": 1,
+    "panels": [
+      {
+        "title": "Top Wait Statistics (Wait Time ms)",
+        "type": "barchart",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "ClickHouse-SQLServer-Monitoring" },
+            "queryType": "sql",
+            "rawSql": "SELECT wait_type, sum(wait_time_ms) AS total_wait_ms FROM sqlserver_monitoring.metrics_wait_stats WHERE $__timeFilter(created_at) GROUP BY wait_type ORDER BY total_wait_ms DESC LIMIT 10",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "title": "Active Blocking & Long Running Queries",
+        "type": "table",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "ClickHouse-SQLServer-Monitoring" },
+            "queryType": "sql",
+            "rawSql": "SELECT created_at, session_id, blocking_session_id, database_name, wait_type, wait_time_ms, total_elapsed_time_ms, query_text FROM sqlserver_monitoring.metrics_active_requests WHERE $__timeFilter(created_at) ORDER BY total_elapsed_time_ms DESC LIMIT 50",
+            "refId": "A"
+          }
+        ]
+      }
+    ]
+  }

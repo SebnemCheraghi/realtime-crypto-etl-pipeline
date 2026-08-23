@@ -1,0 +1,50 @@
+{
+    "annotations": { "list": [] },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "title": "SQL Server - Database Overview",
+    "uid": "sqlserver_db_overview",
+    "version": 1,
+    "panels": [
+      {
+        "title": "CPU & Memory Utilization",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "ClickHouse-SQLServer-Monitoring" },
+            "queryType": "sql",
+            "rawSql": "SELECT $__timeGroup(created_at, '1m') AS time, server_name, avg(sql_cpu_utilization) AS SQL_CPU, avg(other_cpu_utilization) AS Other_CPU FROM sqlserver_monitoring.metrics_server WHERE $__timeFilter(created_at) GROUP BY time, server_name ORDER BY time",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "title": "Database Sizes (MB)",
+        "type": "barchart",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "ClickHouse-SQLServer-Monitoring" },
+            "queryType": "sql",
+            "rawSql": "SELECT database_name, sum(size_mb) AS total_size_mb, sum(used_space_mb) AS used_mb FROM sqlserver_monitoring.metrics_database WHERE created_at = (SELECT max(created_at) FROM sqlserver_monitoring.metrics_database) GROUP BY database_name",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "title": "Disk Read/Write IO Stall (ms)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 24, "x": 0, "y": 8 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "ClickHouse-SQLServer-Monitoring" },
+            "queryType": "sql",
+            "rawSql": "SELECT $__timeGroup(created_at, '1m') AS time, database_name, sum(io_stall_read_ms) AS Read_Stall_MS, sum(io_stall_write_ms) AS Write_Stall_MS FROM sqlserver_monitoring.metrics_disk_io WHERE $__timeFilter(created_at) GROUP BY time, database_name ORDER BY time",
+            "refId": "A"
+          }
+        ]
+      }
+    ]
+  }
