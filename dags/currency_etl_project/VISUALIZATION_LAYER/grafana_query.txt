@@ -1,0 +1,43 @@
+#hourly
+SELECT
+    timestamp AS time,
+    currency_id,
+    avg(current_price) AS price
+FROM crypto_prices
+WHERE $__timeFilter(timestamp)
+GROUP BY time, currency_id
+ORDER BY time
+
+
+#daily 
+SELECT
+    toStartOfDay(timestamp) AS time,
+    currency_id,
+    avg(current_price) AS avg_price,
+    max(high_24h) AS max_price,
+    min(low_24h) AS min_price
+FROM crypto_prices
+WHERE $__timeFilter(timestamp)
+GROUP BY time, currency_id
+ORDER BY time
+
+#weekly
+SELECT
+    toStartOfWeek(timestamp) AS time,
+    currency_id,
+    avg(current_price) AS avg_price
+FROM crypto_prices
+WHERE $__timeFilter(timestamp)
+GROUP BY time, currency_id
+ORDER BY time
+
+
+#monthly
+SELECT
+    toStartOfMonth(timestamp) AS time,
+    currency_id,
+    avg(current_price) AS avg_price
+FROM crypto_prices
+WHERE $__timeFilter(timestamp)
+GROUP BY time, currency_id
+ORDER BY time

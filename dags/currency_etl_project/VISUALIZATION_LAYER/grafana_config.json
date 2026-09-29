@@ -1,0 +1,53 @@
+{
+    "annotations": {
+      "list": []
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "id": null,
+    "links": [],
+    "liveNow": false,
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": ["crypto", "clickhouse", "etl"],
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Crypto Currency Price Monitoring",
+    "uid": "crypto_etl_dashboard",
+    "version": 1,
+    "panels": [
+      {
+        "id": 1,
+        "title": "Hourly Average Price ",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse_default" },
+            "format": 0,
+            "rawSql": "SELECT timestamp AS time, currency_id, avg(current_price) AS price FROM crypto_prices WHERE $__timeFilter(timestamp) GROUP BY time, currency_id ORDER BY time",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Daily Aggregated Price ",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+        "targets": [
+          {
+            "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse_default" },
+            "format": 0,
+            "rawSql": "SELECT toStartOfDay(timestamp) AS time, currency_id, avg(current_price) AS avg_price FROM crypto_prices WHERE $__timeFilter(timestamp) GROUP BY time, currency_id ORDER BY time",
+            "refId": "A"
+          }
+        ]
+      }
+    ]
+  }

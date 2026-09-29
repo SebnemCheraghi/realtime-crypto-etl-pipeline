@@ -1,0 +1,41 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "grafana",
+  "signedByOrg": "grafana",
+  "signedByOrgName": "Grafana Labs",
+  "plugin": "grafana-clickhouse-datasource",
+  "version": "4.20.0",
+  "time": 1784582488883,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "LICENSE": "cdd15e614b50e88443fe574ad56bde5ba697d958a45376431638eea816e3bfc3",
+    "CHANGELOG.md": "72c2b61d787872b85d480456edd4759d0ab47791bcc0d976328d78aec3856e8c",
+    "plugin.json": "f5558cf452da07e61e46f4948b306a50aac268b5cdd39109c9c74c8e381f7239",
+    "img/logo.svg": "838199055d86584ff105e5e91013203a6acb7d3f2061ae27678786125ab11f09",
+    "go_plugin_build_manifest": "08dd4c7cefab625200b143c32af862b0a59207c06ec7845091f254a9e8e69da2",
+    "gpx_clickhouse_linux_amd64": "f5cd73733e34cfb5dc6944bb345dd23413c5071f80ad1c6f4b30fe4bcbd56a94",
+    "dashboards/otel-logs-explorer.json": "cadd4b6ff10655d3f75a9b392f98da4968ee0ece12b17b395976a15805c1e4b7",
+    "dashboards/otel-traces-explorer.json": "dda500b84793f610bae6ccd7db130e9afb78ffa4fe7be81f37622479a4dd1ef9",
+    "dashboards/cluster-analysis.json": "7f83d4d09cc6f045768f5bf47485b864dd6da03094f8607808dec77cb96902e5",
+    "dashboards/system-dashboards.json": "017881431af913d3c8f776b4dab51e8a153745b016a964bb1ec3c99f52704af4",
+    "dashboards/data-analysis.json": "b9d6ddc6ca768049a34710c8a731afd18bd5a79c652ac7e30c2dba269821366c",
+    "dashboards/query-analysis.json": "cac22978b1b9378ec2d4b56c9af096a01492c31cfce526ef06b3dc58ad05a3b2",
+    "dashboards/otel-service-dashboard.json": "bf2cbe073bc263647e1407c0b4d86ba76787498e92de098c133e89f80d3b69b6",
+    "README.md": "d4e3dbe61f39504d4592173f92f3cf7a2dd4a52ddaa5824d8fbb68ef177b4fbe",
+    "module.js.map": "ce4dad839e993c4a0a10725decb22ed262759c94a5475cc6ff3e3e0a8465a816",
+    "module.js": "11f128f836630412c6c4922cb75ddd4657d33f0973901169a3f841f99948d15a"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+
+wsA+BAETCgBtBYJqXpFYCRB+TQxqcIhm50UUAAAAAAAcACBzYWx0QG5vdGF0
+aW9ucy5vcGVucGdwanMub3JnpVPU+v9+0Etkx9TcTxpHJJEH7bbjaVIbbWqs
+u/XOb2QWIQTzOyW2kQdOhGNlcPN+TQxqcIhm5wAABk0CCQHH94N+kkT1/xCP
+HlAGK8w3y7tEYk4MX4tQyWetdY+WN6NR6TQ7Zr0Nv15dGOF7z+gbGHe8rkd1
+0+KvN85Er+zELwIHRBdcfJ3+YGnRk4sO7zCR+SmmMYf7pbe+39hCEt5BKdCD
+rsbKtvRmP5zsi/3jhKPmOK0BZ+7+3PCfHnWf/Nt3wvw=
+=kCix
+-----END PGP SIGNATURE-----

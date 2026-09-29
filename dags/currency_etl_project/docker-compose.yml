@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse_server
+    ports:
+      - "8124:8123"
+      - "9001:9000"
+    environment:
+      - CLICKHOUSE_USER=admin
+      - CLICKHOUSE_PASSWORD=admin
+      - CLICKHOUSE_DB=crypto_db
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+    networks:
+      - crypto_network
+
+  grafana:
+    image: grafana/grafana:9.5.2
+    container_name: grafana_server
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=grafana-clickhouse-datasource
+    volumes:
+      - ./plugins:/var/lib/grafana/plugins
+    depends_on:
+      - clickhouse
+    networks:
+      - crypto_network
+
+  airflow:
+    build: .
+    container_name: airflow_server
+    restart: always
+    depends_on:
+      - clickhouse
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/project_root/ORCHESTRATION_LAYER/airflow_dags
+      - PYTHONPATH=/opt/airflow/project_root
+      - AIRFLOW_USER=admin
+      - AIRFLOW_PASSWORD=admin
+    ports:
+      - "8081:8080"
+    volumes:
+      - .:/opt/airflow/project_root
+    command: standalone
+    networks:
+      - crypto_network
+
+volumes:
+  clickhouse_data:
+
+networks:
+  crypto_network:
+    driver: bridge
